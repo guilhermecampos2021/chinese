@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flashcards Chinês</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #f0f4ff, #dbeafe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .card {
+      width: 420px;
+      height: 240px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 54px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+      user-select: none;
+      padding: 20px;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .info {
+      margin-top: 15px;
+      color: #444;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card" id="card">
+      你好
+    </div>
+
+    <div class="buttons">
+      <button onclick="previousCard()">⬅ Anterior</button>
+      <button onclick="nextCard()">Próximo ➡</button>
+    </div>
+
+    <div class="info">
+      Clique no card para revelar as informações.
+    </div>
+  </div>
+
+  <script>
+    const flashcards = [
+      {
+        hanzi: "你好",
+        pinyin: "nǐ hǎo",
+        traducao: "Olá"
+      },
+      {
+          hanzi:"衣服",
+          pinyin: "yi fu",
+          traducao: "Clothes"
+       },
+      {
+          hanzi:"桌子上",
+          pinyin: "zhuô zi shàng",
+          traducao: "On the table"
+       },
+      {
+        hanzi: "谢谢",
+        pinyin: "xièxie",
+        traducao: "Obrigado"
+      },
+      {
+        hanzi: "水",
+        pinyin: "shuǐ",
+        traducao: "Água"
+      },
+      {
+        hanzi: "学校",
+        pinyin: "xuéxiào",
+        traducao: "Escola"
+      },
+      {
+        hanzi: "中国",
+        pinyin: "Zhōngguó",
+        traducao: "China"
+      }
+    ];
+
+    let currentIndex = 0;
+    let stage = 0;
+
+    const card = document.getElementById("card");
+
+    function updateCard() {
+      const current = flashcards[currentIndex];
+
+      if (stage === 0) {
+        card.innerHTML = current.hanzi;
+        card.style.fontSize = "54px";
+      } else if (stage === 1) {
+        card.innerHTML = current.pinyin;
+        card.style.fontSize = "42px";
+      } else {
+        card.innerHTML = current.traducao;
+        card.style.fontSize = "42px";
+      }
+    }
+
+    card.addEventListener("click", () => {
+      stage = (stage + 1) % 3;
+      updateCard();
+    });
+
+    function nextCard() {
+      currentIndex = (currentIndex + 1) % flashcards.length;
+      stage = 0;
+      updateCard();
+    }
+
+    function previousCard() {
+      currentIndex = (currentIndex - 1 + flashcards.length) % flashcards.length;
+      stage = 0;
+      updateCard();
+    }
+
+    updateCard();
+  </script>
+</body>
+</html>
